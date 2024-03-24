@@ -1,0 +1,7 @@
+ARG PMA_VERSION
+
+FROM phpmyadmin:${PMA_VERSION}
+
+VOLUME /sessions
+
+EXPOSE 80
