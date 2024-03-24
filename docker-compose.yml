@@ -9,7 +9,7 @@ services:
     environment:
       - TZ=${WORKSPACE_TIMEZONE}
     volumes:
-      - ${APP_CODE_PATH_HOST}/cruder:${APP_CODE_PATH_CONTAINER}
+      - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}
       - ./docker/php-fpm/php${PHP_VERSION}.ini-development:/usr/local/etc/php/php.ini
 
   nginx:
@@ -26,7 +26,7 @@ services:
     depends_on:
       - php-fpm
     volumes:
-      - ${APP_CODE_PATH_HOST}/cruder:${APP_CODE_PATH_CONTAINER}
+      - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}
       - ${NGINX_SITES_PATH}:/etc/nginx/sites-available
       - ${NGINX_FILE_CONFIG}:/etc/nginx/nginx.conf
     ports:

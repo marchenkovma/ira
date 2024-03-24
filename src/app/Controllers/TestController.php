@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace B24Cruder\Controllers;
+namespace Ira\Controllers;
 
 use Aruka\Http\Response;
 

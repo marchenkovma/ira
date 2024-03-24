@@ -9,8 +9,8 @@ use Aruka\Routing\Router;
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 require_once dirname(__DIR__) . '/config/constants.php';
 
-$dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
-$dotenv->load();
+//$dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
+//$dotenv->load();
 
 $request = Request::createFromGlobals();
 

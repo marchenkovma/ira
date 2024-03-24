@@ -12,7 +12,7 @@ CONTAINER_NAME := $(COMPOSE_PROJECT_NAME)-php-fpm
 
 # Запускает проект
 start:
-	docker-compose up -d --build php-fpm nginx rabbitmq phpmyadmin php-worker php-consumer tomcat
+	docker-compose up -d --build php-fpm nginx
 
 # Останавливает проект
 stop:

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace B24Cruder;
+namespace Ira;
 
 use PDO;
 
