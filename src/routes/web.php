@@ -3,15 +3,13 @@
 declare(strict_types=1);
 
 use Aruka\Routing\Route;
-use B24Cruder\Controllers\CrudeController;
-use B24Cruder\Controllers\IndexController;
-use B24Cruder\Controllers\InfoController;
-use B24Cruder\Controllers\TestController;
+use Ira\Controllers\IndexController;
+use Ira\Controllers\InfoController;
+use Ira\Controllers\TestController;
 
 return [
     // (Метод, Маршрут,[Путь до класса контроллера, Метод контроллера])
     Route::get('/', [IndexController::class, 'index']),
-    Route::get('/crude', [CrudeController::class, 'index']),
     Route::get('/info', [InfoController::class, 'index']),
     Route::get('/test', [TestController::class, 'index']),
     Route::post('/test', [TestController::class, 'index']),
