@@ -19,7 +19,7 @@ stop:
 	docker-compose down
 
 # Удаляет папку vendor и файл composer.lock
-make clean:
+clean:
 	-rm -rf src/vendor
 	-rm src/composer.lock
 
