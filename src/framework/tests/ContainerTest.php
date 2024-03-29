@@ -27,4 +27,26 @@ class ContainerTest extends TestCase
         $container->add('not-existing-class');
     }
 
+    public function test_containerHasMethod()
+    {
+        $container = new Container();
+
+        $container->add('aruka-class', ArukaClass::class);
+
+        $this->assertTrue($container->has('aruka-class'));
+
+        $this->assertFalse($container->has('not-existing-class'));
+    }
+
+    public function test_recursiveAutowired()
+    {
+        $container = new Container();
+
+        $container->add('aruka-class', ArukaClass::class);
+
+        $this->assertTrue($container->has('aruka-class'));
+
+        $this->assertFalse($container->has('not-existing-class'));
+    }
+
 }

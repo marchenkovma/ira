@@ -1229,12 +1229,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/exporter.git",
-                "reference": "e58279a4edf115838b64b4fab75e4ff333753de9"
+                "reference": "92f21fd9f9d1e9544ad07a49fe1da7349001d33b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/exporter/zipball/e58279a4edf115838b64b4fab75e4ff333753de9",
-                "reference": "e58279a4edf115838b64b4fab75e4ff333753de9",
+                "url": "https://api.github.com/repos/sebastianbergmann/exporter/zipball/92f21fd9f9d1e9544ad07a49fe1da7349001d33b",
+                "reference": "92f21fd9f9d1e9544ad07a49fe1da7349001d33b",
                 "shasum": ""
             },
             "require": {
@@ -1300,7 +1300,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-03-22T13:45:25+00:00"
+            "time": "2024-03-29T08:24:22+00:00"
         },
         {
             "name": "sebastian/global-state",
@@ -1546,12 +1546,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/recursion-context.git",
-                "reference": "4a206545a00b0773edf4c056dd712bb96ac5487e"
+                "reference": "396fdbbdb95420649b3d0c4766b992da686c22fc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/recursion-context/zipball/4a206545a00b0773edf4c056dd712bb96ac5487e",
-                "reference": "4a206545a00b0773edf4c056dd712bb96ac5487e",
+                "url": "https://api.github.com/repos/sebastianbergmann/recursion-context/zipball/396fdbbdb95420649b3d0c4766b992da686c22fc",
+                "reference": "396fdbbdb95420649b3d0c4766b992da686c22fc",
                 "shasum": ""
             },
             "require": {
@@ -1603,7 +1603,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-03-22T13:53:14+00:00"
+            "time": "2024-03-29T09:41:38+00:00"
         },
         {
             "name": "sebastian/type",
