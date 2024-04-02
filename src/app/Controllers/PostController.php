@@ -6,11 +6,11 @@ namespace Ira\Controllers;
 
 use Aruka\Http\Response;
 
-class IndexController
+class PostController
 {
-    public function index(): Response
+    public function show(int $id): Response
     {
-        $content = '<h1>Hello, I\'m a B24-Cruder!</h1>';
+        $content = "<h1>Post - $id</h1>";
 
         return new Response($content);
     }

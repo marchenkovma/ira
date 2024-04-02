@@ -6,27 +6,44 @@ namespace Aruka\Http;
 
 use Aruka\Http\Exceptions\HttpException;
 use Aruka\Routing\RouterInterface;
+use League\Container\Container;
 
 class Kernel
 {
+    private string $appEnv = 'production';
+
     public function __construct(
-        private RouterInterface $router
+        private readonly RouterInterface $router,
+        private readonly Container $container,
     ) {
+        $this->appEnv = $container->get('APP_ENV');
     }
 
     // Обрабывает запрос и возвращает ответ
-    public function handle(Request $request)
+    public function handle(Request $request): Response
     {
         try {
-            [$routerHandler, $vars] = $this->router->dispatch($request);
+            [$routerHandler, $vars] = $this->router->dispatch($request, $this->container);
 
             // Вызывает callback-функция с массивом параметров
             $response = call_user_func_array($routerHandler, $vars);
-        } catch (HttpException $e) {
-            $response = new Response($e->getMessage(), $e->getStatusCode());
-        } catch (\Throwable $e) {
-            $response = new Response($e->getMessage(), 500);
+        }  catch (\Exception $e) {
+            $response = $this->createExpectionResponse($e);
         }
+
         return $response;
+    }
+
+    private function createExpectionResponse(\Exception $e): Response
+    {
+        if (in_array($this->appEnv, ['local', 'testing'])) {
+            throw $e;
+        }
+
+        if ($e instanceof HttpException) {
+            return new Response($e->getMessage(), $e->getStatusCode());
+        }
+
+        return new Response('Server error', 500);
     }
 }

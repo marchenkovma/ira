@@ -7,8 +7,6 @@ namespace Aruka\Http;
 class Request
 {
     public function __construct(
-        // К свойствам было добавлено readonly,
-        // какой смысл если свойство private?
         // Данные из глобального массива $_GET
         private array $getParams,
 

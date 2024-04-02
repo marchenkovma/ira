@@ -9,11 +9,14 @@ use Aruka\Http\Exceptions\RouteNotFoundException;
 use Aruka\Http\Request;
 use FastRoute\Dispatcher;
 use FastRoute\RouteCollector;
+use League\Container\Container;
+
 use function FastRoute\simpleDispatcher;
 
 class Router implements RouterInterface
 {
-    public function dispatch(Request $request): array
+    private array $routes;
+    public function dispatch(Request $request, Container $container): array
     {
         [$handler, $vars] = $this->extractRouteInfo($request);
 
@@ -21,11 +24,17 @@ class Router implements RouterInterface
             // Т.к. переменная $controller содержит весь путь
             // App\Controllers\HomeController, благодаря использованию
             // HomeController:class в web.php
-            [$controller, $method] = $handler;
-            $handler = [new $controller, $method];
+            [$controllerId, $method] = $handler;
+            $controller = $container->get($controllerId);
+            $handler = [$controller, $method];
         }
 
         return [$handler, $vars];
+    }
+
+    public function registerRoutes(array $routes): void
+    {
+        $this->routes = $routes;
     }
 
     // Возвращает информацию о совпадение URI и метода из запроса
@@ -34,9 +43,7 @@ class Router implements RouterInterface
     {
         // Функция simpleDispatcher описывает маршруты
         $dispatcher = simpleDispatcher(function (RouteCollector $collector) {
-            // Подключает маршруты
-            $routes = include BASE_PATH.'/routes/web.php';
-            foreach ($routes as $route) {
+            foreach ($this->routes as $route) {
                 // Аналог $collector->addRoute($route[0], $route[1], $route[2]);
                 $collector->addRoute(...$route);
             }
