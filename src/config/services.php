@@ -34,9 +34,7 @@ $container->delegate(new ReflectionContainer(true));
 $container->add('APP_ENV', new StringArgument($appEnv));
 
 // Создает и настраивает маршрутизатор
-$container->add(RouterInterface::class, Router::class)
-->addMethodCall('registerRoutes', [new ArrayArgument($routes)]);
-
+$container->add(RouterInterface::class, Router::class);
 $container->extend(RouterInterface::class)
     ->addMethodCall('registerRoutes', [new ArrayArgument($routes)]);
 
