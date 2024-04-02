@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 use Aruka\Controller\AbstractController;
 use Aruka\Http\Kernel;
@@ -38,7 +36,7 @@ $container->add(RouterInterface::class, Router::class);
 $container->extend(RouterInterface::class)
     ->addMethodCall('registerRoutes', [new ArrayArgument($routes)]);
 
-// Создает ядро приложения с зависимостями
+// Создает и настраивает ядро приложения с зависимостями
 $container->add(Kernel::class)
     ->addArgument(RouterInterface::class)   // Внедряет маршрутизатор
     ->addArgument($container);                  // Внедряет контейнер
