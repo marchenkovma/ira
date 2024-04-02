@@ -1,6 +1,6 @@
 <?php
 
-namespace Aruka\Controllers;
+namespace Aruka\Controller;
 
 use Psr\Container\ContainerInterface;
 

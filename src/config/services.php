@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Aruka\Controllers\AbstractController;
+use Aruka\Controller\AbstractController;
 use Aruka\Http\Kernel;
 use Aruka\Routing\Router;
 use Aruka\Routing\RouterInterface;
@@ -27,29 +27,36 @@ $viewPath = BASE_PATH . '/views';
 
 $container = new Container();
 
-// Позволяет создавать объект класса со всеми зависимыми классами
+// Включает автоматическое внедрение зависимостей через рефлексию
 $container->delegate(new ReflectionContainer(true));
 
+// Регистрирует переменную окружения приложения
 $container->add('APP_ENV', new StringArgument($appEnv));
 
+// Создает и настраивает маршрутизатор
 $container->add(RouterInterface::class, Router::class)
 ->addMethodCall('registerRoutes', [new ArrayArgument($routes)]);
 
 $container->extend(RouterInterface::class)
     ->addMethodCall('registerRoutes', [new ArrayArgument($routes)]);
 
+// Создает ядро приложения с зависимостями
 $container->add(Kernel::class)
-    ->addArgument(RouterInterface::class)
-    ->addArgument($container);
+    ->addArgument(RouterInterface::class)   // Внедряет маршрутизатор
+    ->addArgument($container);                  // Внедряет контейнер
 
+// Создает и настраивает загрузчик Twig
 // Метод addShared позволяет использовать уже созданный объект и не создает новый
 $container->addShared('twig-loader', Filesystemloader::class)
     ->addArgument(new StringArgument($viewPath));
 
+// Создает и настраивает Twig
 $container->addShared('twig', Environment::class)
     ->addArgument('twig-loader');
 
+// Внедряет контейнер в класс AbstractController
 $container->inflector(AbstractController::class)
     ->invokeMethod('setContainer', [$container]);
 
+// Возвращает контейнер со всеми настроенными сервисами
 return $container;

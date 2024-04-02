@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Ira\Controllers;
 
-use Aruka\Controllers\AbstractController;
+use Aruka\Controller\AbstractController;
 use Aruka\Http\Response;
 use Ira\Services\YouTubeService;
 
