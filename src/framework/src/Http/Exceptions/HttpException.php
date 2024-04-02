@@ -2,7 +2,9 @@
 
 namespace Aruka\Http\Exceptions;
 
-class HttpException extends \Exception
+use Exception;
+
+class HttpException extends Exception
 {
     private int $statusCode = 400;
 

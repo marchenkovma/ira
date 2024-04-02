@@ -16,6 +16,6 @@ class TestController
             'MESSAGE' => 'Hello World!',
         ]);
 
-        return new Response($content, 200,$headers);
+        return new Response($content, 200, $headers);
     }
 }

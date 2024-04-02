@@ -1,10 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Ira;
 
 use PDO;
+use PDOException;
 
 class Database
 {
@@ -32,7 +31,7 @@ class Database
 
         try {
             self::$instance = new PDO($dsn, $this->username, $this->password, $options);
-        } catch (\PDOException $exception) {
+        } catch (PDOException $exception) {
             echo $exception->getMessage();
         }
     }

@@ -9,10 +9,8 @@ class Response
     public function __construct(
         // Контент
         private mixed $content = null,
-
         // HTTP-код ответа
         private int $statusCode = 200,
-
         // HTTP-заголовки ответа
         private readonly array $headers = []
     ) {

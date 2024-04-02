@@ -9,16 +9,12 @@ class Request
     public function __construct(
         // Данные из глобального массива $_GET
         private array $getParams,
-
         // Данные из глобального массива $_POST
         private array $postData,
-
         // Данные из глобального массива $_COOKIE
         private array $cookies,
-
         // Данные из глобального массива $_FILES
         private array $files,
-
         // Данные из глобального массива $_SERVER
         private array $server,
     ) {

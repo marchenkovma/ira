@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 use Aruka\Controllers\AbstractController;
 use Aruka\Http\Kernel;
+use Aruka\Routing\Router;
+use Aruka\Routing\RouterInterface;
 use League\Container\Argument\Literal\ArrayArgument;
 use League\Container\Argument\Literal\StringArgument;
 use League\Container\Container;
-use Aruka\Routing\RouterInterface;
-use Aruka\Routing\Router;
 use League\Container\ReflectionContainer;
 use Symfony\Component\Dotenv\Dotenv;
 use Twig\Environment;
@@ -25,11 +27,13 @@ $viewPath = BASE_PATH . '/views';
 
 $container = new Container();
 
+// Позволяет создавать объект класса со всеми зависимыми классами
 $container->delegate(new ReflectionContainer(true));
 
 $container->add('APP_ENV', new StringArgument($appEnv));
 
-$container->add(RouterInterface::class, Router::class);
+$container->add(RouterInterface::class, Router::class)
+->addMethodCall('registerRoutes', [new ArrayArgument($routes)]);
 
 $container->extend(RouterInterface::class)
     ->addMethodCall('registerRoutes', [new ArrayArgument($routes)]);
@@ -38,7 +42,7 @@ $container->add(Kernel::class)
     ->addArgument(RouterInterface::class)
     ->addArgument($container);
 
-// Метод addShared позволяет использовать уже созданный экземпляр объекта и не создает новый
+// Метод addShared позволяет использовать уже созданный объект и не создает новый
 $container->addShared('twig-loader', Filesystemloader::class)
     ->addArgument(new StringArgument($viewPath));
 

@@ -10,6 +10,12 @@ CONTAINER_NAME := $(COMPOSE_PROJECT_NAME)-php-fpm
 # Указывает фиктивные цели
 .PHONY: start stop restart php composer phpcs phpcbf sh
 
+
+help:
+	@echo "Please use \`make <target>' where <target> is one of"
+	@echo "  start		start the development environment"
+	@echo "  stop		stop the development environment"
+
 # Запускает проект
 start:
 	docker-compose up -d --build php-fpm nginx
@@ -45,11 +51,11 @@ phpunit:
 
 # Запускает CodeSniffer
 phpcs:
-	docker exec -it $(CONTAINER_NAME) ./vendor/bin/phpcs $(filter-out $@,$(MAKECMDGOALS))
+	docker exec -it $(CONTAINER_NAME) php ./vendor/bin/phpcs $(filter-out $@,$(MAKECMDGOALS))
 
 # Запускает CodeSniffer Fixer
 phpcbf:
-	docker exec -it $(CONTAINER_NAME) ./vendor/bin/phpcbf $(filter-out $@,$(MAKECMDGOALS))
+	docker exec -it $(CONTAINER_NAME) php ./vendor/bin/phpcbf $(filter-out $@,$(MAKECMDGOALS))
 
 # Подключается к оболочке sh внутри контейнера
 sh:

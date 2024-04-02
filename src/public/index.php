@@ -1,9 +1,8 @@
 <?php
 
-declare(strict_types=1);
-
 use Aruka\Http\Kernel;
 use Aruka\Http\Request;
+use League\Container\Container;
 
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 require_once dirname(__DIR__) . '/config/constants.php';
@@ -15,11 +14,10 @@ $request = Request::createFromGlobals();
 
 $container = require BASE_PATH . '/config/services.php';
 
-/** @var \League\Container\Container $container */
+/** @var Container $container */
 $kernel = $container->get(Kernel::class);
 
 // Kernel получает Request, обрабатывает его handel() и возвращает Response
 // Дальше Response методом send() возвращает результат в браузер
 $response = $kernel->handle($request);
 $response->send();
-

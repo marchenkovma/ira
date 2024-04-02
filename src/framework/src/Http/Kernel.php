@@ -6,6 +6,7 @@ namespace Aruka\Http;
 
 use Aruka\Http\Exceptions\HttpException;
 use Aruka\Routing\RouterInterface;
+use Exception;
 use League\Container\Container;
 
 class Kernel
@@ -27,14 +28,14 @@ class Kernel
 
             // Вызывает callback-функция с массивом параметров
             $response = call_user_func_array($routerHandler, $vars);
-        }  catch (\Exception $e) {
+        } catch (Exception $e) {
             $response = $this->createExpectionResponse($e);
         }
 
         return $response;
     }
 
-    private function createExpectionResponse(\Exception $e): Response
+    private function createExpectionResponse(Exception $e): Response
     {
         if (in_array($this->appEnv, ['local', 'testing'])) {
             throw $e;
