@@ -1,0 +1,24 @@
+#!/usr/bin/env php
+<?php
+
+use Aruka\Console\Kernel;
+use League\Container\Container;
+
+// 1. Установить базовый путь
+require_once __DIR__ . '/config/constants.php';
+
+// 2. Добавить autoloader
+require_once __DIR__ . '/vendor/autoload.php';
+
+// 3. Добавить контейнер
+/** @var Container $container */
+$container = require BASE_PATH . '/config/services.php';
+
+// 4. Получить Kernel консоли из контейнера
+$kernel = $container->get(Kernel::class);
+
+// 5. Вызвать метод handle в Kernel, передав код статуса консольного приложения
+$status = $kernel->handle();
+
+// 6. Выйти с этим статусом из консольного приложения
+exit($status);

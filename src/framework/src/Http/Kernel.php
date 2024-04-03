@@ -25,8 +25,6 @@ class Kernel
     public function handle(Request $request): Response
     {
         try {
-            dd($this->container->get(Connection::class));
-
             [$routerHandler, $vars] = $this->router->dispatch($request, $this->container);
 
             // Вызывает callback-функция с массивом параметров
