@@ -8,7 +8,7 @@ class Response
 {
     public function __construct(
         // Контент
-        private mixed $content = null,
+        private string $content = '',
         // HTTP-код ответа
         private int $statusCode = 200,
         // HTTP-заголовки ответа
@@ -27,5 +27,12 @@ class Response
         }
 
         echo $this->content;
+    }
+
+    public function setContent(string $content): Response
+    {
+        $this->content = $content;
+
+        return $this;
     }
 }

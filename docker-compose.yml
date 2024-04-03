@@ -52,8 +52,8 @@ services:
         - TZ=${WORKSPACE_TIMEZONE}
     volumes:
       - ${DATA_PATH_HOST}/mysql:/var/lib/mysql
-    #ports:
-    #  - "${MYSQL_PORT}:3306"
+    ports:
+      - "${MYSQL_PORT}:3306"
 
   adminer:
     build:

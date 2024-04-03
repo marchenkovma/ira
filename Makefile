@@ -18,7 +18,7 @@ help:
 
 # Запускает проект
 start:
-	docker-compose up -d --build php-fpm nginx
+	docker-compose up -d --build php-fpm nginx phpmyadmin
 
 # Останавливает проект
 stop:

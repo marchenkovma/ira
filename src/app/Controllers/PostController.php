@@ -4,14 +4,20 @@ declare(strict_types=1);
 
 namespace Ira\Controllers;
 
+use Aruka\Controller\AbstractController;
 use Aruka\Http\Response;
 
-class PostController
+class PostController extends AbstractController
 {
     public function show(int $id): Response
     {
-        $content = "<h1>Post - $id</h1>";
+        return $this->render('posts.html.twig', [
+            'postId' => $id
+        ]);
+    }
 
-        return new Response($content);
+    public function create(): Response
+    {
+        return $this->render('create_post.html.twig');
     }
 }
