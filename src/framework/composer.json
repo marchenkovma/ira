@@ -12,7 +12,7 @@
         "league/container": "^4.2.2",
         "symfony/dotenv": "^v7.0.4",
         "twig/twig": "^v3.8.0",
-        "doctrine/dbal": "^4.0.1"
+        "doctrine/dbal": "^3.6.5"
     },
     "require-dev": {
         "symfony/var-dumper": "^6.3",
