@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Aruka\Routing;
 
+use Aruka\Controller\AbstractController;
 use Aruka\Http\Exceptions\MethodNotAllowedException;
 use Aruka\Http\Exceptions\RouteNotFoundException;
 use Aruka\Http\Request;
@@ -26,8 +27,15 @@ class Router implements RouterInterface
             // HomeController:class в web.php
             [$controllerId, $method] = $handler;
             $controller = $container->get($controllerId);
+
+            if (is_subclass_of($controller, AbstractController::class)) {
+                $controller->setRequest($request);
+            }
+
             $handler = [$controller, $method];
         }
+
+        //$vars['request'] = $request;
 
         return [$handler, $vars];
     }

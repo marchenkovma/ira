@@ -14,6 +14,9 @@ RUN apt-get update && apt-get install -y \
     libicu-dev \
     supervisor
 
+COPY ./php/conf.d/timezone.ini /usr/local/etc/php/conf.d/timezone.ini
+
+
 # Устанавливает Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 

@@ -108,7 +108,7 @@ services:
       - ${APP_CODE_PATH_HOST}/php-worker:${APP_CODE_PATH_CONTAINER}
       - ./docker/php-worker/php${PHP_VERSION}.ini-development:/usr/local/etc/php/php.ini
       - ./docker/php-worker/supervisord.conf:/etc/supervisor/supervisord.conf
-      - ./docker/php-worker/conf.d:/etc/supervisor/conf.d
+      - ./docker/php-worker/supervisor/conf.d:/etc/supervisor/conf.d
 
   phpmyadmin:
     build:
@@ -149,7 +149,7 @@ services:
       - ${APP_CODE_PATH_HOST}/php-consumer:${APP_CODE_PATH_CONTAINER}
       - ./docker/php-consumer/php${PHP_VERSION}.ini-development:/usr/local/etc/php/php.ini
       - ./docker/php-consumer/supervisord.conf:/etc/supervisor/supervisord.conf
-      - ./docker/php-consumer/conf.d:/etc/supervisor/conf.d
+      - ./docker/php-consumer/supervisor/conf.d:/etc/supervisor/conf.d
 
   tomcat:
     build:

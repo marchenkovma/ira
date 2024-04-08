@@ -16,6 +16,8 @@
     },
     "require-dev": {
         "symfony/var-dumper": "^v6.3",
+        "phpunit/phpunit": "^11.0.9",
         "squizlabs/php_codesniffer": "^3.9.1"
+
     }
 }

@@ -6,6 +6,11 @@
             "Aruka\\": "src"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Aruka\\Tests\\": "tests"
+        }
+    },
     "require": {
         "php": "^8.3",
         "nikic/fast-route": "^1.3",

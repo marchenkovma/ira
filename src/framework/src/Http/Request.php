@@ -10,7 +10,7 @@ class Request
         // Данные из глобального массива $_GET
         private array $getParams,
         // Данные из глобального массива $_POST
-        private array $postData,
+        public array $postData,
         // Данные из глобального массива $_COOKIE
         private array $cookies,
         // Данные из глобального массива $_FILES

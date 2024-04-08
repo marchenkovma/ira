@@ -16,7 +16,7 @@ class ConnectionFactory
 
     public function create(): Connection
     {
-        return DriverManager::getConnection([
+        return $connection = DriverManager::getConnection([
             'url' => $this->databaseUrl
         ]);
     }

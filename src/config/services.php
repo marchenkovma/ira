@@ -1,18 +1,22 @@
 <?php declare(strict_types=1);
 
+use Aruka\Console\Application;
+use Aruka\Console\Commands\MigrateCommand;
 use Aruka\Controller\AbstractController;
 use Aruka\Dbal\ConnectionFactory;
 use Aruka\Http\Kernel;
+use Aruka\Console\Kernel as ConsoleKernel;
 use Aruka\Routing\Router;
 use Aruka\Routing\RouterInterface;
+use Aruka\Sessions\Session;
+use Aruka\Sessions\SessionInterface;
+use Aruka\Template\TwigFactory;
 use Doctrine\DBAL\Connection;
 use League\Container\Argument\Literal\ArrayArgument;
 use League\Container\Argument\Literal\StringArgument;
 use League\Container\Container;
 use League\Container\ReflectionContainer;
 use Symfony\Component\Dotenv\Dotenv;
-use Twig\Environment;
-use Twig\Loader\FilesystemLoader;
 
 $dotenv = new Dotenv();
 $dotenv->load(BASE_PATH . '/.env');
@@ -31,6 +35,8 @@ $container = new Container();
 // Включает автоматическое внедрение зависимостей через рефлексию
 $container->delegate(new ReflectionContainer(true));
 
+$container->add('framework-commands-namespace', new StringArgument('Aruka\\Console\\Commands\\'));
+
 // Регистрирует переменную окружения приложения
 $container->add('APP_ENV', new StringArgument($appEnv));
 
@@ -39,11 +45,12 @@ $container->add(RouterInterface::class, Router::class);
 $container->extend(RouterInterface::class)
     ->addMethodCall('registerRoutes', [new ArrayArgument($routes)]);
 
-// Создает и настраивает ядро приложения с зависимостями
+// Создает и настраивает ядро веб-приложения
 $container->add(Kernel::class)
-    ->addArgument(RouterInterface::class)   // Внедряет маршрутизатор
-    ->addArgument($container);                  // Внедряет контейнер
+    ->addArgument(RouterInterface::class) // Внедряет маршрутизатор
+    ->addArgument($container); // Внедряет контейнер
 
+/*
 // Создает и настраивает загрузчик Twig
 // Метод addShared позволяет использовать уже созданный объект и не создает новый
 $container->addShared('twig-loader', Filesystemloader::class)
@@ -52,6 +59,19 @@ $container->addShared('twig-loader', Filesystemloader::class)
 // Создает и настраивает Twig
 $container->addShared('twig', Environment::class)
     ->addArgument('twig-loader');
+*/
+
+$container->addShared(SessionInterface::class, Session::class);
+
+$container->add('twig-factory', TwigFactory::class)
+    ->addArguments([
+        new StringArgument($viewPath),
+        SessionInterface::class
+    ]);
+
+$container->addShared('twig', function () use ($container) {
+    return $container->get('twig-factory')->create();
+});
 
 // Внедряет контейнер в класс AbstractController
 $container->inflector(AbstractController::class)
@@ -63,6 +83,18 @@ $container->add(ConnectionFactory::class)
 $container->addShared(Connection::class, function () use ($container): Connection {
     return $container->get(ConnectionFactory::class)->create();
 });
+
+$container->add(Application::class)
+    ->addArgument($container);
+
+// Создает и настраивает ядро консольного приложения
+$container->add(ConsoleKernel::class)
+    ->addArgument($container) // Внедряет контейнер
+    ->addArgument(Application::class);
+
+$container->add('console:migrate', MigrateCommand::class)
+    ->addArgument(Connection::class)
+    ->addArgument(new StringArgument(BASE_PATH . '/database/migrations'));
 
 // Возвращает контейнер со всеми настроенными сервисами
 return $container;

@@ -47,7 +47,7 @@ composer:
 	docker exec -it $(CONTAINER_NAME) composer $(filter-out $@,$(MAKECMDGOALS))
 
 phpunit:
-	docker exec -it $(CONTAINER_NAME) ./framework/vendor/bin/phpunit --colors $(filter-out $@,$(MAKECMDGOALS))
+	docker exec -it $(CONTAINER_NAME) ./vendor/bin/phpunit --colors $(filter-out $@,$(MAKECMDGOALS))
 
 # Запускает CodeSniffer
 phpcs:
