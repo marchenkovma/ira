@@ -35,7 +35,7 @@ class PostController extends AbstractController
         return $this->render('create_post.html.twig');
     }
 
-    public function store()
+    public function store(): Response
     {
         $post = Post::create(
             $this->request->postData['title'],
