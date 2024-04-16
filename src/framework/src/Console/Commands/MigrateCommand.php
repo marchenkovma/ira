@@ -22,7 +22,7 @@ class MigrateCommand implements CommandInterface
     public function execute(array $parameters = []): int
     {
         try {
-            $this->connection->setAutoCommit(false);
+            //$this->connection->setAutoCommit(false);
 
             // 1. Создает таблицу миграций (migrations), если таблица еще не существует
             $this->createMigrationsTable();
@@ -58,15 +58,15 @@ class MigrateCommand implements CommandInterface
                 $this->connection->executeStatement($sql);
             }
 
-            $this->connection->commit();
+            //$this->connection->commit();
 
         } catch (\Throwable $e) {
-            $this->connection->rollBack();
+            //$this->connection->rollBack();
 
             throw $e;
         }
 
-        $this->connection->setAutoCommit(true);
+        //$this->connection->setAutoCommit(true);
 
         return 0;
     }

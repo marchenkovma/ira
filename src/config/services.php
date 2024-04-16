@@ -6,6 +6,8 @@ use Aruka\Controller\AbstractController;
 use Aruka\Dbal\ConnectionFactory;
 use Aruka\Http\Kernel;
 use Aruka\Console\Kernel as ConsoleKernel;
+use Aruka\Http\Middleware\RequestHandler;
+use Aruka\Http\Middleware\RequestHandlerInterface;
 use Aruka\Routing\Router;
 use Aruka\Routing\RouterInterface;
 use Aruka\Sessions\Session;
@@ -45,10 +47,15 @@ $container->add(RouterInterface::class, Router::class);
 $container->extend(RouterInterface::class)
     ->addMethodCall('registerRoutes', [new ArrayArgument($routes)]);
 
+$container->add(RequestHandlerInterface::class, RequestHandler::class);
+
 // Создает и настраивает ядро веб-приложения
 $container->add(Kernel::class)
-    ->addArgument(RouterInterface::class) // Внедряет маршрутизатор
-    ->addArgument($container); // Внедряет контейнер
+    ->addArguments([
+        RouterInterface::class, // Внедряет маршрутизатор
+        $container, // Внедряет контейнер
+        RequestHandlerInterface::class // Внедряет обработчик запросов
+    ]);
 
 /*
 // Создает и настраивает загрузчик Twig

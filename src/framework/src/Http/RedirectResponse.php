@@ -2,7 +2,7 @@
 
 namespace Aruka\Http;
 
-use Aruka\Http\Response;
+use JetBrains\PhpStorm\NoReturn;
 
 class RedirectResponse extends Response
 {

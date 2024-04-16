@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Aruka\Http;
 
 use Aruka\Http\Exceptions\HttpException;
+use Aruka\Http\Middleware\RequestHandler;
+use Aruka\Http\Middleware\RequestHandlerInterface;
 use Aruka\Routing\RouterInterface;
 use Doctrine\DBAL\Connection;
 use Exception;
@@ -17,6 +19,7 @@ class Kernel
     public function __construct(
         private readonly RouterInterface $router,
         private readonly Container $container,
+        private RequestHandlerInterface $requestHandler
     ) {
         $this->appEnv = $container->get('APP_ENV');
     }
@@ -25,10 +28,12 @@ class Kernel
     public function handle(Request $request): Response
     {
         try {
-            [$routerHandler, $vars] = $this->router->dispatch($request, $this->container);
+           $response = $this->requestHandler->handle($request);
+
+            //[$routerHandler, $vars] = $this->router->dispatch($request, $this->container);
 
             // Вызывает callback-функция с массивом параметров
-            $response = call_user_func_array($routerHandler, $vars);
+            //$response = call_user_func_array($routerHandler, $vars);
         } catch (Exception $e) {
             $response = $this->createExpectionResponse($e);
         }

@@ -1,11 +1,11 @@
-{% extends 'layouts/default.html.twig' %}
+{% extends 'layouts/blog.html.twig' %}
 
 {% block main %}
-        <div class="bg-body-tertiary p-5 rounded">
+        <div class="bg-body my-3 p-5 rounded shadow-sm">
             <form action="/posts" method="post">
                 <div class="mb-3">
                     <label for="title" class="form-label">Заголовок</label>
-                    <input id="title" type="text" name="title" class="form-control" aria-describedby="title" placeholder="Введите заголовок" value="Тестовый заголовок "required>
+                    <input id="title" type="text" name="title" class="form-control" aria-describedby="title" placeholder="Введите заголовок" value="Тестовый заголовок" required>
                 </div>
                 <div class="mb-3">
                     <label for="body" class="form-label">Текст</label>
