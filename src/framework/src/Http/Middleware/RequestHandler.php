@@ -4,13 +4,21 @@ namespace Aruka\Http\Middleware;
 
 use Aruka\Http\Request;
 use Aruka\Http\Response;
+use Psr\Container\ContainerInterface;
 
 class RequestHandler implements RequestHandlerInterface
 {
     private array $middleware = [
+        StartSession::class,
         Authenticate::class,
-        Success::class
+        RouterDispatch::class
     ];
+
+    public function __construct(
+        private ContainerInterface $container
+    )
+    {
+    }
 
     public function handle(Request $request): Response
     {
@@ -21,11 +29,10 @@ class RequestHandler implements RequestHandlerInterface
         }
 
         // Получает следующий middleware-класс для выполнения
-        /** @var MiddlewareInterface $middlewareClass */
         $middlewareClass = array_shift($this->middleware);
 
-        // Создает новый экземпляр вызова процесса middleware на нем
-        $response = (new $middlewareClass())->process($request, $this);
+        $middleware = $this->container->get($middlewareClass);
+        $response = $middleware->process($request, $this);
 
         return $response;
     }

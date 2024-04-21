@@ -21,3 +21,5 @@ $kernel = $container->get(Kernel::class);
 // Дальше Response методом send() возвращает результат в браузер
 $response = $kernel->handle($request);
 $response->send();
+
+$kernel->terminate($request, $response);

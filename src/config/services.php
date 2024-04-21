@@ -8,6 +8,7 @@ use Aruka\Http\Kernel;
 use Aruka\Console\Kernel as ConsoleKernel;
 use Aruka\Http\Middleware\RequestHandler;
 use Aruka\Http\Middleware\RequestHandlerInterface;
+use Aruka\Http\Middleware\RouterDispatch;
 use Aruka\Routing\Router;
 use Aruka\Routing\RouterInterface;
 use Aruka\Sessions\Session;
@@ -47,7 +48,8 @@ $container->add(RouterInterface::class, Router::class);
 $container->extend(RouterInterface::class)
     ->addMethodCall('registerRoutes', [new ArrayArgument($routes)]);
 
-$container->add(RequestHandlerInterface::class, RequestHandler::class);
+$container->add(RequestHandlerInterface::class, RequestHandler::class)
+    ->addArgument($container);
 
 // Создает и настраивает ядро веб-приложения
 $container->add(Kernel::class)
@@ -102,6 +104,12 @@ $container->add(ConsoleKernel::class)
 $container->add('console:migrate', MigrateCommand::class)
     ->addArgument(Connection::class)
     ->addArgument(new StringArgument(BASE_PATH . '/database/migrations'));
+
+$container->add(RouterDispatch::class)
+    ->addArguments([
+        RouterInterface::class,
+        $container
+    ]);
 
 // Возвращает контейнер со всеми настроенными сервисами
 return $container;

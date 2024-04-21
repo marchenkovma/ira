@@ -6,13 +6,10 @@ class Session implements SessionInterface
 {
     private const string FLASH_KEY = 'flash';
 
-    public function __construct()
-    {
-        session_start();
-    }
 
     public function start(): void
     {
+        session_start();
     }
 
     public function set(string $key, $value): void

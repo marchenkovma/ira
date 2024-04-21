@@ -1,6 +1,6 @@
 <?php
 
-namespace Ira\Enitites;
+namespace Ira\Entities;
 
 class Post
 {

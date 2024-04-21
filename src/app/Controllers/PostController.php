@@ -8,7 +8,7 @@ use Aruka\Controller\AbstractController;
 use Aruka\Http\RedirectResponse;
 use Aruka\Http\Response;
 use Aruka\Sessions\SessionInterface;
-use Ira\Enitites\Post;
+use Ira\Entities\Post;
 use Ira\Services\PostService;
 
 ;
@@ -38,13 +38,13 @@ class PostController extends AbstractController
     public function store(): Response
     {
         $post = Post::create(
-            $this->request->postData['title'],
-            $this->request->postData['body'],
+            $this->request->input('title'),
+            $this->request->input('body'),
         );
 
         $post = $this->service->save($post);
 
-        $this->session->setFlash('success', 'Пост успешно создан');
+        $this->request->getSession()->setFlash('success', 'Пост успешно создан');
 
         return new RedirectResponse("/posts/{$post->getId()}");
     }

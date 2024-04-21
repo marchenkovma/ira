@@ -29,16 +29,19 @@ class Kernel
     {
         try {
            $response = $this->requestHandler->handle($request);
-
-            //[$routerHandler, $vars] = $this->router->dispatch($request, $this->container);
-
-            // Вызывает callback-функция с массивом параметров
-            //$response = call_user_func_array($routerHandler, $vars);
         } catch (Exception $e) {
             $response = $this->createExpectionResponse($e);
         }
 
         return $response;
+    }
+
+    public function terminate(Request $request, Response $response): void
+    {
+        // ?-> - null safe оператор
+        $request->getSession()?->clearFlash();
+
+        // Здесь можно очистить куки, закрыть соединение с сервисом и т.д.
     }
 
     private function createExpectionResponse(Exception $e): Response

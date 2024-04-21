@@ -4,13 +4,16 @@ declare(strict_types=1);
 
 namespace Aruka\Http;
 
+use Aruka\Sessions\SessionInterface;
+
 class Request
 {
+    private SessionInterface $session;
     public function __construct(
         // Данные из глобального массива $_GET
         private array $getParams,
         // Данные из глобального массива $_POST
-        public array $postData,
+        private array $postData,
         // Данные из глобального массива $_COOKIE
         private array $cookies,
         // Данные из глобального массива $_FILES
@@ -40,5 +43,20 @@ class Request
     public function getMethod(): string
     {
         return $this->server['REQUEST_METHOD'];
+    }
+
+    public function getSession(): SessionInterface
+    {
+        return $this->session;
+    }
+
+    public function setSession(SessionInterface $session): void
+    {
+        $this->session = $session;
+    }
+
+    public function input(string $key, mixed $default = null)
+    {
+        return $this->postData[$key] ?? $default;
     }
 }

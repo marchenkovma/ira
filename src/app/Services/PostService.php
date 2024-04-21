@@ -4,7 +4,7 @@ namespace Ira\Services;
 
 use Aruka\Http\Exceptions\NotFoundException;
 use Doctrine\DBAL\Connection;
-use Ira\Enitites\Post;
+use Ira\Entities\Post;
 
 class PostService
 {
